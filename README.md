@@ -2,6 +2,8 @@
 
 # Integrantes: 
 - Elkin Madrid  [@elkinmadrid](https://github.com/elkinmadrid)
+- Victor Arzuza [@troyanhack](https://github.com/troyanhack)
+- Andrea Arevalo [@andreaarevalo12](https://github.com/andreaarevalo12)
 
 ## Enlance del Tablero en Trello.
   https://trello.com/invite/b/kdaveQFW/5622f98e37559d0fbe315d157f0e399e/electiva-profundizacion-i
