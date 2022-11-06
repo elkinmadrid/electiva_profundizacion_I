@@ -1,16 +1,21 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { MD5 } from 'crypto-js';
+import { throws } from 'assert';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
 
-  create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto) {
+    const userExist = await this.findOneByEmail(createUserDto.email)
+    if (userExist) {
+      throw new BadRequestException('Email already exist')
+    }
     const newUser = Object.assign({}, createUserDto);
     newUser.password = MD5(newUser.password).toString();
     return this.userRepo.save(newUser);
@@ -36,5 +41,9 @@ export class UsersService {
 
   remove(id: number) {
     return this.userRepo.softDelete(id);
+  }
+
+  async findOneByEmail(email: string) {
+    return this.userRepo.findOneBy({email})
   }
 }
